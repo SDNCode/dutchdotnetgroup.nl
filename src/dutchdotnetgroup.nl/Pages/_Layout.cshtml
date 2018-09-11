@@ -1,0 +1,52 @@
+﻿@inject Microsoft.AspNetCore.Hosting.IHostingEnvironment HostingEnvironment
+@inject dutchdotnetgroup.nl.Services.IDeploymentEnvironment DeploymentEnvironment
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"]</title>
+    <meta name="description" content="De SDN Cast is een wekelijkse live stream met het nieuws, de events en de laatste ontwikkelingen in softwareland. Met uw presentatoren: Maarten van Stam, Marcel Meijer en Fanie Reynders." />
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="shortcut icon" href="~/favicon.ico" />
+
+    @RenderSection("StyleInfo", required: false)
+
+</head>
+<body>
+
+    @RenderSection("PreContent", required: false)
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    @RenderSection("FooterContent", required: false)
+
+    @RenderSection("PostContent", required: false)
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+<!-- IsHttps: @Context.Request.IsHttps -->
+<!-- Host: @Context.Request.Host.Host -->
+<!-- ViewPath: @ViewContext.View.Path -->
+<!-- ViewAssembly: @GetType().Assembly.FullName -->
+<cache>
+    <!-- Environment: @HostingEnvironment.EnvironmentName -->
+    <!-- Application: @Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationName, @Microsoft.Extensions.PlatformAbstractions.PlatformServices.Default.Application.ApplicationVersion -->
+    <!-- Deployment: @DeploymentEnvironment.DeploymentId -->
+    <!-- Framework: @DeploymentEnvironment.RuntimeFramework -->
+    <!-- OS: @System.Runtime.InteropServices.RuntimeInformation.OSDescription @System.Runtime.InteropServices.RuntimeInformation.OSArchitecture -->
+    <!-- Machine: @Environment.MachineName -->
+</cache>

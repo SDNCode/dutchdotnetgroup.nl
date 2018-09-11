@@ -1,0 +1,241 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Dutch .NET Group Admin";
+}
+
+@section PreContent {
+    <header>
+        <div class="jumbotron">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+                    <a class="navbar-brand" href="https://dutchdotnetgroup.nl">
+                        <img src="~/images/dutchdotnet.png" style="max-width: 200px;" />
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">Home</a>
+                            </li>
+                            @*<li class="nav-item">
+                                <a class="nav-link" href="/Event">Event</a>
+                            </li>*@
+                            <li class="nav-item active">
+                                <a class="nav-link" href="/Admin">Admin</a>
+                            </li>
+                        </ul>
+
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="http://sdncast.nl">
+                                    <img src="~/images/sdncastlogo.png" />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+}
+
+@section StyleInfo {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="invisible"
+              asp-fallback-test-property="visibility"
+              asp-fallback-test-value="hidden" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    <partial name="_Analytics" />
+}
+
+<div class="admin-screen">
+    <h2>SDN Cast Admin - @Model.EnvironmentName</h2>
+
+    <form method="post" class="form-horizontal" role="form">
+        <h4>Live Show Details</h4>
+        <hr />
+        @if (Model.ShowSuccessMessage)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @Model.SuccessMessage
+            </div>
+        }
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group row">
+            <label asp-for="AdminMessage" class="col-md-3 col-form-label font-weight-bold"></label>
+            <div class="col-md-5">
+                <input asp-for="AdminMessage" class="form-control" />
+                <span asp-validation-for="AdminMessage" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="LiveShowEmbedUrl" class="col-md-3 col-form-label font-weight-bold"></label>
+            <div class="col-md-5">
+                <input asp-for="LiveShowEmbedUrl" class="form-control" />
+                <span asp-validation-for="LiveShowEmbedUrl" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="LiveShowHtml" class="col-md-3 col-form-label font-weight-bold"></label>
+            <div class="col-md-5">
+                <textarea asp-for="LiveShowHtml" class="form-control html-input" rows="4"></textarea>
+                <span asp-validation-for="LiveShowHtml" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="input-group row" id="nextShowDate">
+            <label asp-for="NextShowDatePst" class="col-md-3 col-form-label font-weight-bold"></label>
+            <div class="col-md-5">
+                <input asp-for="NextShowDatePst" asp-format="{0:MM/dd/yyyy HH:mm}" type="text" class="form-control col-md-2" placeholder="MM/dd/yyyy HH:mm" maxlength="16" />
+                <div class="input-group-append">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Next Thursday <span class="caret"></span></button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" data-suggestion="@Model.NextShowDateSuggestionCetPM">20:00 PM</a>
+                    </div>
+                </div>
+            </div>
+            <span asp-validation-for="NextShowDatePst" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="offset-md-3 col-md-9">
+                <span class="col-md-4">
+                    Central Europe Standard Time
+                </span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="offset-md-3 col-md-9">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+
+    <form asp-page-handler="ClearCache" method="post" class="form-horizontal" role="form">
+        <h4>YouTube Settings</h4>
+        <hr />
+        <div class="form-group row">
+            <label asp-for="AppSettings.YouTubePlaylistId" class="col-md-3 col-form-label font-weight-bold"></label>
+            <div class="col-md-4">
+                <p class="form-control-static">@Model.AppSettings.YouTubePlaylistId</p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="AppSettings.YouTubeApplicationName" class="col-md-3 col-form-label font-weight-bold"></label>
+            <div class="col-md-3">
+                <p class="form-control-static click-to-show" data-hidden-value="@Model.AppSettings.YouTubeApplicationName">click to show</p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="AppSettings.YouTubeApiKey" class="col-md-3 col-form-label font-weight-bold"></label>
+            <div class="col-md-4">
+                <p class="form-control-static click-to-show" data-hidden-value="@Model.AppSettings.YouTubeApiKey">click to show</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="offset-md-3 col-md-9">
+                <button type="submit" class="btn btn-danger">Clear YouTube Cache</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="form-horizontal">
+        <h4>Azure Storage Settings</h4>
+        <hr />
+        <div class="form-group row">
+            <label asp-for="AppSettings.AzureStorageConnectionString" class="col-md-3 col-form-label font-weight-bold"></label>
+            <div class="col-md-4">
+                <p class="form-control-static click-to-show" data-hidden-value="@(Model.AppSettings.AzureStorageConnectionString ?? "[none]")">click to show</p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="AppSettings.AzureStorageContainerName" class="col-md-3 col-form-label font-weight-bold"></label>
+            <div class="col-md-4">
+                <p class="form-control-static">@Model.AppSettings.AzureStorageContainerName</p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="AppSettings.AzureStorageBlobName" class="col-md-3 col-form-label font-weight-bold"></label>
+            <div class="col-md-4">
+                <p class="form-control-static">@Model.AppSettings.AzureStorageBlobName</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section FooterContent {
+    <footer>
+        <div class="row">
+            <div class="col-md-6">
+                <p>
+                    &copy; @DateTime.Now.Year SDN. All rights reserved.
+                </p>
+            </div>
+            <div class="col-md-6 text-right">
+                <partial name="_LoginPartial" />
+            </div>
+        </div>
+    </footer>
+}
+
+@section Scripts {
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/popper.js/dist/umd/popper.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"
+                asp-fallback-src="~/lib/popper.js/dist/umd/popper.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>
+    </environment>
+    <partial name="_ValidationScripts" />
+    <script>
+        $(function () {
+            $("p[data-hidden-value]")
+                .click(function () {
+                    var $self = $(this),
+                        state = $self.data("state") || "hidden";
+
+                    if (state === "hidden") {
+                        $self.text($self.data("hidden-value"));
+                        $self.data("state", "showing");
+                        $self.addClass("click-to-show-revealed");
+                    } else {
+                        $self.text("click to show");
+                        $self.data("state", "hidden");
+                        $self.removeClass("click-to-show-revealed");
+                    }
+                });
+
+            var nextShowDateInput = $("#nextShowDate input");
+
+            var suggestions = $("#nextShowDate a[data-suggestion]");
+
+            suggestions
+                .click(e => {
+                    nextShowDateInput.val($(e.target).data("suggestion"));
+                    e.preventDefault();
+                });
+        });
+    </script>
+}

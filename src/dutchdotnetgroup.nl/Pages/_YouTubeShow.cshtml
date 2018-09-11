@@ -1,0 +1,27 @@
+﻿@using dutchdotnetgroup.nl.Models
+@model Show
+
+<div class="col-sm-6 col-md-4">
+    <div class="img-thumbnail youtube-show bottom-buffer mx-auto">
+        <a href="@Model.Url" title="Watch this episode">
+            <div>
+                <img class="img-fluid mx-auto" src="@Model.ThumbnailUrl" alt="Thumbnail of episode" />
+            </div>
+        </a>
+        <div class="caption text-center">
+            <h5>
+                <a href="@Model.Url" title="Watch this episode">
+                    @if (Model.HasTitle)
+                    {
+                        @Model.Title<br />
+                    }
+                </a>
+                <span class="show-date">@Model.ShowDate.DateTime.ToString("dd MMM, yyyy")</span>
+                @if (Model.IsNew)
+                {
+                    <span class="label label-success label-new-show">New</span>
+                }
+            </h5>
+        </div>
+    </div>
+</div>
