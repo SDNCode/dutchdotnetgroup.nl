@@ -18,7 +18,7 @@ var library = {
     destination: "lib",
     source: [
         // glob pattern to get the dirname and match only js and min.js file wanted
-        path.dirname(require.resolve('jquery-validation-unobtrusive/jquery.validate.unobtrusive.js')) + '/*unobtrusive**.js',
+        path.dirname(require.resolve('jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js')) + '/*unobtrusive**.js',
         // alternative of declaring each file
         require.resolve('font-awesome/css/font-awesome.css'),
         require.resolve('font-awesome/css/font-awesome.min.css'),
@@ -65,12 +65,12 @@ gulp.task("clean:lib", function (cb) {
     rimraf(paths.library, cb);
 });
 
-gulp.task("clean", ["clean:js", "clean:css", "clean:lib"]);
+gulp.task("clean", gulp.series("clean:js", "clean:css", "clean:lib"));
 
-gulp.task("lib", ["clean"], function () {
+gulp.task("lib", gulp.series("clean", function () {
   return gulp.src(library.source, { base: library.base })
     .pipe(gulp.dest(paths.library));
-});
+}));
 
 gulp.task("min:js", function () {
     return gulp.src([paths.js, "!" + paths.minJs], { base: "." })
@@ -86,20 +86,21 @@ gulp.task("min:css", function () {
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min", ["lib", "csslint", "jshint", "min:js", "min:css"]);
-
-gulp.task("jshint", ["lib"], function(cb) {
-    return gulp.src([paths.js, "!" + paths.minJs])
-        .pipe(jshint())
-        .pipe(jshint.reporter(), cb);
-});
-
-gulp.task("csslint", ["lib"], function() {
+gulp.task("csslint", gulp.series("lib", function() {
     return gulp.src([paths.css, "!"  + paths.minCss])
         .pipe(csslint())
         .pipe(csslint.formatter());
-});
+}));
 
-gulp.task("prepublish", ["lib", "csslint", "jshint",  "min"]);
 
-gulp.task("default", ["prepublish"]);
+gulp.task("jshint", gulp.series("lib", function(cb) {
+    return gulp.src([paths.js, "!" + paths.minJs])
+        .pipe(jshint())
+        .pipe(jshint.reporter(), cb);
+}));
+
+gulp.task("min", gulp.series("lib", "csslint", "jshint", "min:js", "min:css"));
+
+gulp.task("prepublish", gulp.series("lib", "csslint", "jshint", "min"));
+
+gulp.task("default", gulp.series("prepublish"));
