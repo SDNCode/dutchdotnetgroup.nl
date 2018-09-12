@@ -65,12 +65,12 @@ gulp.task("clean:lib", function (cb) {
     rimraf(paths.library, cb);
 });
 
-gulp.task("clean", gulp.series("clean:js", "clean:css", "clean:lib"));
+gulp.task("clean", ["clean:js", "clean:css", "clean:lib"]);
 
-gulp.task("lib", gulp.series("clean", function () {
+gulp.task("lib", ["clean"], function () {
   return gulp.src(library.source, { base: library.base })
     .pipe(gulp.dest(paths.library));
-}));
+});
 
 gulp.task("min:js", function () {
     return gulp.src([paths.js, "!" + paths.minJs], { base: "." })
@@ -86,21 +86,21 @@ gulp.task("min:css", function () {
         .pipe(gulp.dest("."));
 });
 
-gulp.task("csslint", gulp.series("lib", function() {
+gulp.task("csslint", ["lib"], function() {
     return gulp.src([paths.css, "!"  + paths.minCss])
         .pipe(csslint())
         .pipe(csslint.formatter());
-}));
+});
 
 
-gulp.task("jshint", gulp.series("lib", function(cb) {
+gulp.task("jshint", ["lib"], function(cb) {
     return gulp.src([paths.js, "!" + paths.minJs])
         .pipe(jshint())
         .pipe(jshint.reporter(), cb);
-}));
+});
 
-gulp.task("min", gulp.series("lib", "csslint", "jshint", "min:js", "min:css"));
+gulp.task("min", ["lib", "csslint", "jshint", "min:js", "min:css"]);
 
-gulp.task("prepublish", gulp.series("lib", "csslint", "jshint", "min"));
+gulp.task("prepublish", ["lib", "csslint", "jshint", "min"]);
 
-gulp.task("default", gulp.series("prepublish"));
+gulp.task("default", ["prepublish"]);
