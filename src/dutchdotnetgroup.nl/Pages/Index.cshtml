@@ -61,11 +61,11 @@
 
                     @if (Model.IsOnAir)
                     {
-                        <span class="label label-danger"><strong>ON AIR</strong></span>
+                        <span class="badge badge-danger"><strong>ON AIR</strong></span>
                     }
                     else if (Model.HasAdminMessage)
                     {
-                        <span class="label label-warning"><strong>STANDBY</strong></span>
+                        <span class="badge badge-warning"><strong>STANDBY</strong></span>
                     }
                 </h1>
                 @if (Model.HasAdminMessage)
@@ -139,33 +139,34 @@
                         <p>Kom terug om de Meetup te bekijken en vragen te stellen!</p>
                     </div>
                 }
-                <div class="row justify-content-center">
-                    <h3>
-                        Met dank aan onze dotNETConf sponsors:
-                    </h3>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-sm-3 align-self-center text-center">
-                        <a href="https://microsoft.com" target="_blank" title="">
-                            <img src="/images/Microsoft_logo.svg" alt="Microsoft logo" style="max-height: 50px;">
-                        </a>
+
+                @*<div class="row justify-content-center">
+                        <h3>
+                            Met dank aan onze dotNETConf sponsors:
+                        </h3>
                     </div>
-                    <div class="col-sm-3 align-self-center text-center">
-                        <a href="https://revdebug.com" target="_blank" title="">
-                            <img src="/images/RevDebug1.png" alt="RevDebug logo" style="max-height: 60px;">
-                        </a>
-                    </div>
-                    <div class="col-sm-3 align-self-center text-center">
-                        <a href="https://www.sdn.nl" target="_blank" title="">
-                            <img src="/images/sdnlogo.png" alt="SDN logo" style="max-height: 70px;">
-                        </a>
-                    </div>
-                    <div class="col-sm-3 align-self-center text-center">
-                        <a href="https://www.capgemini.com/nl-nl/" target="_blank" title="">
-                            <img src="/images/capgemini.png" alt="Capgemini logo" style="max-height:80px;">
-                        </a>
-                    </div>
-                </div>
+                    <div class="row justify-content-center">
+                        <div class="col-sm-3 align-self-center text-center">
+                            <a href="https://microsoft.com" target="_blank" title="">
+                                <img src="/images/Microsoft_logo.svg" alt="Microsoft logo" style="max-height: 50px;">
+                            </a>
+                        </div>
+                        <div class="col-sm-3 align-self-center text-center">
+                            <a href="https://revdebug.com" target="_blank" title="">
+                                <img src="/images/RevDebug1.png" alt="RevDebug logo" style="max-height: 60px;">
+                            </a>
+                        </div>
+                        <div class="col-sm-3 align-self-center text-center">
+                            <a href="https://www.sdn.nl" target="_blank" title="">
+                                <img src="/images/sdnlogo.png" alt="SDN logo" style="max-height: 70px;">
+                            </a>
+                        </div>
+                        <div class="col-sm-3 align-self-center text-center">
+                            <a href="https://www.capgemini.com/nl-nl/" target="_blank" title="">
+                                <img src="/images/capgemini.png" alt="Capgemini logo" style="max-height:80px;">
+                            </a>
+                        </div>
+                    </div>*@
             </div>
         </div>
     </header>
@@ -202,8 +203,8 @@
         <a href="https://twitter.com/aafvstam">Maarten van Stam</a>,
         <a href="https://twitter.com/MarcelMeijer">Marcel Meijer</a>,
         <a href="https://twitter.com/FanieReynders">Fanie Reynders</a> en
-        <a href="https://twitter.com/jfversluis">Gerald Versluis</a><br />af en toe aangevuld met een gastspreker.<br /><br />
-        We organisen met behulp van sponsors kleine tot grote evenementen met sprekers. Meestal een diner, één of twee sessies en een netwwerk borrel voor een gezellig onderhoud met jouw network peers!
+        <a href="https://twitter.com/jfversluis">Gerald Versluis</a><br />
+        We organiseren met behulp van sponsors kleine tot grote evenementen met sprekers. Meestal een diner, één of twee sessies en een netwerk borrel voor een gezellig onderhoud met jouw network peers!
     </p>
 
     <div class="col-lg-3 text-center">
